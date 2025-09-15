@@ -1,0 +1,174 @@
+@media (max-width: 1570px){
+    .caution__message{
+        font-size: 2.1rem;
+        margin-left: 19%;
+    }
+}
+
+@media (max-width: 1500px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 2.3rem;
+    }
+
+    .delivered-btn{
+        left: 38vw;
+    }
+}
+
+@media (max-width: 1200px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 2rem;
+    }
+
+    .header__elAguacate-container{
+        width: 28%;
+    }
+
+    .softappetit__img2{
+        height: 50%;
+        margin-top: 184%;
+    }
+
+    .delivered-btn{
+        top: 0vw;
+        height: 7vh;
+        width: 8vh;
+        font-size: 4.5vh;
+    }
+
+    .caution__message{
+        margin-left: 11%;
+    }
+}
+
+@media (max-width: 1040px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.5rem;
+        padding-top: 2.5rem;
+    }
+
+    .delivered-btn {
+        height: 6vh;
+        width: 6vh;
+        font-size: 3.8vh;
+    }
+
+    .window__caoution {
+        width: 37%;
+        margin-left: 31%;
+    }
+
+}
+
+@media (max-width: 840px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.2rem;
+    }
+
+    .comanda-screen__title, 
+    .finish-screen__title,
+    .finish-screen__client-container{
+        font-size: 2.5rem;
+    }
+
+    .header__elAguacate-container {
+        width: 35%;
+    }
+
+    .softappetit__img2 {
+        height: 29%;
+        margin-top: 288%;
+    }
+
+    .delivered-btn {
+        height: 5vh;
+        width: 5vh;
+        font-size: 3.2vh;
+        left: 36vw;
+    }
+
+    .caution__message{
+        font-size: 2.5rem;
+    }
+
+    .window__caoution {
+        width: 64%;
+        margin-left: 17%;
+    }
+
+    .confirm__message {
+        margin-left: 6%;
+        margin-right: 6%;
+        font-size: 1.5rem;
+    }
+
+    .selected-option__icon-wrap {
+        width: 80%;
+        margin-left: 11%;
+    }
+}
+
+@media (max-width: 680px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.2rem;
+        padding-top: 1.5rem;
+    }
+
+    .finish-screen__client-container{
+        font-size: 1.7rem;
+    }
+
+    .header__elAguacate-container {
+        width: 45%;
+        margin-left: 27%;
+    }
+
+    .softappetit__img2 {
+        height: 21%;
+        margin-top: 391%;
+    }
+
+    .delivered-btn{
+        left: 38vw;
+        height: 4vh;
+        width: 4vh;
+        font-size: 2.5vh;
+    }
+
+    .caution__message{
+        font-size: 1.9rem;
+    }
+}
+
+@media (max-width: 580px){
+    .softappetit__img2 {
+        height: 18%;
+        margin-top: 599%;
+    }
+}
+
+@media (max-width: 500px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        padding-top: 0.5rem;
+    }
+
+    .finish-screen__client-container{
+        font-size: 1.5rem;
+    }
+
+    .header__elAguacate-container {
+        width: 60%;
+        margin-left: 18%;
+    }
+
+     .caution__message {
+        font-size: 1.5rem;
+        margin-top: 19%;
+    }
+}

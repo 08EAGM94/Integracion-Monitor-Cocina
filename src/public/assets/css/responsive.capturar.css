@@ -1,0 +1,135 @@
+@media (max-width: 1003px) {
+    .window-form__title{
+        left: 16%;
+    }
+
+    .comanda-input,
+    .customer-input{
+        width: 89%;
+    }
+
+    .row__select,
+    .select__screen-status{
+        height: 91%;
+        left: 12%;
+    }
+
+    .row__select{
+        width: 88%;
+    }
+
+    .select__screen-status{
+        width: 70%;
+    }
+
+    .window__caoution{
+        width: 41%;
+        height: 39%;
+        margin-left: 29%;
+    }
+}
+
+@media (max-width: 840px) {
+    .window-form__cancel-btn{
+        left: 84%;
+    }
+    .window-form__btn{
+        left: 55%;
+        width: 44%;
+    }
+
+    .confirm__btn{
+        width: 49%;
+        left: 25%;
+    }
+
+    .selected-option__icon-wrap{
+        width: 35%;
+        margin-left: 33%;
+    }
+}
+
+
+@media (max-width: 730px) {
+    .window-form__title{
+        left: 1%;
+    }
+    .confirm__message{
+        margin-top: 6%;
+        font-size: 1.4rem;
+    }
+
+    .capturar__header{
+        padding-left: 4%;
+    }
+
+    .button-wrapper{
+        flex-direction: column;
+        width: 100%;
+        height: 16%;
+        gap: 18%;
+    }
+
+    .pedido-btn,
+    .limpiar-btn{
+        width: 100%;
+        height: 41%;
+        font-size: 2rem;
+    }
+
+    .order-view__zone{
+        width: 100%;
+    }
+}
+
+@media (max-width: 608px) {
+    .window-form__title{
+        font-size: 3.2rem;
+    }
+
+    .comanda-label,
+    .customer-label{
+        font-size: 1.5rem;
+    }
+
+    .order-view__field,
+    .order-view__rows,
+    .select__screen-status{
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .window-form__title{
+        font-size: 2.5rem;
+    }
+
+    .window-form__cancel-btn{
+        left: 80%;
+    }
+
+    .window-form__btn{
+        left: 20%;
+        width: 62%;
+    }
+
+    .confirm__message{
+        font-size: 1.1rem;
+    }
+
+    .capturar__header{
+        padding-left: 0%;
+        font-size: 2rem;
+    }
+
+    .order-view__field,
+    .order-view__rows,
+    .select__screen-status{
+        font-size: 1.4rem;
+    }
+
+    .selected-option__icon-wrap{
+        width: 50%;
+        margin-left: 29%;
+    }
+}

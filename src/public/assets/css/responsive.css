@@ -1,0 +1,101 @@
+@media (max-width: 1500px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 2.3rem;
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 2rem;
+    }
+
+    .header__elAguacate-container{
+        width: 28%;
+    }
+
+    .softappetit__img2{
+        height: 50%;
+        margin-top: 184%;
+    }
+
+}
+
+@media (max-width: 1040px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.5rem;
+        padding-top: 2.5rem;
+    }
+
+}
+
+@media (max-width: 840px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.2rem;
+    }
+
+    .comanda-screen__title, 
+    .finish-screen__title,
+    .finish-screen__client-container{
+        font-size: 2.5rem;
+    }
+
+    .header__elAguacate-container {
+        width: 35%;
+    }
+
+    .softappetit__img2 {
+        height: 29%;
+        margin-top: 288%;
+    }
+
+}
+
+@media (max-width: 680px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        font-size: 1.2rem;
+        padding-top: 1.5rem;
+    }
+
+    .finish-screen__client-container{
+        font-size: 1.7rem;
+    }
+
+    .header__elAguacate-container {
+        width: 45%;
+        margin-left: 27%;
+    }
+
+    .softappetit__img2 {
+        height: 21%;
+        margin-top: 391%;
+    }
+}
+
+@media (max-width: 580px){
+    .softappetit__img2 {
+        height: 18%;
+        margin-top: 599%;
+    }
+}
+
+@media (max-width: 500px) {
+    .comanda-id__client-id, 
+    .comanda-id__client-name{
+        padding-top: 0.5rem;
+    }
+
+    .finish-screen__client-container{
+        font-size: 1.5rem;
+    }
+
+    .header__elAguacate-container {
+        width: 60%;
+        margin-left: 18%;
+    }
+}

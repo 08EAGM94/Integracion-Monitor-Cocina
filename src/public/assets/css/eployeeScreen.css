@@ -1,0 +1,318 @@
+:root{
+    --background-color: #FFFFFF;
+    --header-color: #295E62;
+    --color-secondary: #2F323D;
+    --ticket-color: #F6F6F6;
+    --color-primary: #f6f6f6;
+}
+
+html{
+    font-size: 10px;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    font-family: "outfit", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+    background-color: var(--background-color);
+}
+
+.hidthis{
+    display: none;
+}
+
+.increseWidth{
+    height: 86%;
+}
+
+.restaurant-header{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    height: 10rem;
+    align-content: center;
+    background: var(--header-color);
+}
+
+.header__elAguacate-container{
+    width: 20%;
+    margin-left: 40%;
+}
+
+.softappetit-container{
+    width: 10%;
+    position: fixed;
+    bottom: 0;
+}
+
+.order-screen{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 11rem;
+    margin-left: 11%;
+    justify-content: space-between;
+}
+
+.order__comanda-screen{
+    overflow: hidden;
+    width: 39%;
+    background: var(--color-secondary);
+    height: 87vh;
+}
+
+.comanda-screen__comanda-id-wrapper,
+.finish-screen__finish-id-wrapper{
+    overflow-y: auto;
+    width: 100%;
+    height: 87%;
+}
+
+.order__finish-screen{
+    overflow: hidden;
+    width: 60%;
+    background: var(--color-secondary);
+    height: 87vh;
+}
+
+
+.comanda-screen__header,
+.finish-screen__header{
+    width: 100%;
+    height: 9rem;
+    text-align: center;
+    padding-top: 2rem;
+    background-color: var(--header-color);
+    margin-bottom: 1rem;
+}
+
+.comanda-screen__title,
+.finish-screen__title{
+    font-size: 3rem;
+    color: var(--background-color);
+}
+
+.comanda-screen__comanda-id,
+.finish-screen__finish-id{
+    position: relative;
+    width: 98%;
+    height: 21%;
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 1%;
+    background-color: var(--background-color);
+    margin-bottom: 1rem;
+    margin-left: 1%;
+    border-left: 0.5rem dashed var(--color-secondary);
+    border-right: 0.5rem dashed var(--color-secondary);
+    transition: all 500ms ease-out;      
+}
+
+.comanda-screen__comanda-id{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-top: 0;
+    height: 18%;
+}
+
+
+.comanda-id__title,
+.table-id__title{
+    font-size: 3rem;
+    color: var(--ticket-color);
+}
+
+.comanda-screen__id-container,
+.table-screen__id-container{
+    width: 100%;
+}
+
+.comanda-id__second-part{
+    display: flex;
+    flex-direction: row;
+    color: var(--color-secondary);
+    font-size: 125%;
+    border: 0.2rem dotted var(--color-secondary);
+    border-radius: 0.5rem;
+    width: 89%;
+    height: 80%;
+    margin-left: 10%;
+}
+
+.comanda-id__client-id{
+    width: 39%;
+    border-right: 0.2rem dotted var(--color-secondary);
+}
+.comanda-id__client-name{
+    width: 61%;
+}
+
+.comanda-id__client-id,
+.comanda-id__client-name{
+    font-size: 2.8rem;
+}
+
+.comanda-id__second-part{
+    margin-top: 2%;
+}
+
+.comanda-screen_dot-1,
+.comanda-screen_dot-2{
+    position: absolute;
+    width: 3%;
+    height: 16%;
+    background: var(--color-secondary);
+    border-radius: 50%;
+    right: 90%;
+}
+
+.comanda-screen_dot-1{
+    bottom: 89%;
+}
+
+.comanda-screen_dot-2{
+    top: 89%;  
+}
+
+
+.finish-screen__client-container{
+    height: 90%;
+    width: 89%;
+    margin-left: 10%;
+    font-size: 3.5rem;
+    color: var(--color-secondary);
+    border: 0.3rem dotted var(--color-secondary); 
+    border-radius: 0.5rem;
+    text-align: center;
+    
+}
+
+
+
+.finish-screen__client-header,
+.finish-screen__client{
+    width: 100%;
+    height: 50%;
+}
+
+
+.finish-screen__client-header{
+    border-bottom: 0.2rem dotted var(--color-secondary);
+}
+
+.delivered-btn{
+    cursor: pointer;
+    position: absolute;
+    left: 40vw;
+    top: 1vw;
+    height: 9vh;
+    width: 10vh;
+    font-size: 5.5vh;
+    border: 0.1rem solid var(--color-secondary);
+    border-radius: 50%;
+    background-color: salmon;
+}
+
+.backgroud-window__zone::before{
+    content: "";
+    z-index: 9;
+    position: fixed;
+    background: var(--color-secondary);
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    top: 0;
+    transition: all 300ms ease-out;
+}
+
+.selected-option__window,
+.selected-option__confirmation{
+    position: absolute;
+    z-index: 999;
+    width: 34%;
+    height: 44%;
+    background: var(--color-primary);
+    top: 28%;
+    left: 33%;
+    transition: all 300ms ease-out;
+}
+
+.window__caoution{
+    position: relative;
+    width: 24%;
+    height: 38%;
+    padding: 1rem;
+    margin-left: 37%;
+    margin-top: 3%;
+    border: 0.5rem solid var(--color-secondary);
+    border-radius: 50%;
+}
+
+.caution__img{
+    position: absolute;
+    bottom: 18%;
+    left: 14%;
+    width: 73%;
+    height: 73%;
+}
+
+.caution__message {
+  margin-top: 2%;
+  margin-left: 16%;
+  font-size: 3rem;
+}
+
+.caution__yes-btn,
+.caution__no-btn,
+.confirm__btn{
+    cursor: pointer;
+    position: absolute;
+    top: 82%;
+    width: 25%;
+    height: 12%;
+    text-align: center;
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    border-radius: 3rem;
+    transition: all 300ms ease-out;
+}
+
+.caution__yes-btn{
+    left: 8%;
+}
+
+.caution__no-btn{
+    z-index: 1;
+    left: 70%;
+}
+
+.confirm__btn{
+    left: 40%;
+}
+
+.caution__yes-btn:hover,
+.caution__yes-btn:focus,
+.caution__no-btn:hover,
+.caution__no-btn:focus,
+.confirm__btn:hover,
+.confirm__btn:focus{
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: 0.1rem solid var(--color-secondary);
+}
+
+.selected-option__icon-wrap{
+    width: 29%;
+    margin-left: 36%;
+}
+
+.confirm__message{
+    margin-left: 23%;
+    margin-right: 11%;
+    margin-top: 5%;
+    font-size: 2rem;
+}

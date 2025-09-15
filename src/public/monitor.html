@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>Monitor Cocina</title>
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/fonts/Outfit/outfit.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/monitor.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/fonts/fontawesome-free-6.7.2-web/css/all.min.css"/>
+        <script type="text/javascript" src="assets/js/monitor.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+        <header class="monitor-header">
+            <div class="monitor-header__wrapper">
+                <label class="monitor-header__title-label">Barra Fría</label>
+                <label class="monitor-header__label" id="orderLabel">Ordenadas:</label>
+                <label class="monitor-header__label" id="processLabel">En Proceso:</label>
+                <label class="monitor-header__label" id="deliveredLabel">Terminados:</label>
+                <label class="monitor-header__label">
+                    <a class="label__link" href="#" id="resetLink">Regresar</a>
+                </label>
+            </div>
+        </header>
+
+        <main class="monitor-main" id="orderMonitor">
+        </main>
+    </body>
+    
+</html>
