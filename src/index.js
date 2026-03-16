@@ -8,7 +8,7 @@ import { PORT } from "./config";
 import {Server as WebSocketServer} from "socket.io";
 //import http instance from http module
 import http from "http";
-//import sockets function from sockets file
+//import our "default" function from sockets file renamed by "sockets"
 import sockets from "./sockets";
 //call the asynchronous function testConnection to establish a connection to our sql server instance
 testConnection();
