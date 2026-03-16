@@ -1,6 +1,9 @@
+//dev environment exclusive
+/*
 import { config } from "dotenv";
 config();
-
+*/
+//best for docker containers
 export const PORT = process.env.PORT || 3001;
 
 export const SQLSERVER_DB = process.env.SQLSERVER_DB;
