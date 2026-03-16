@@ -4,7 +4,14 @@ import { SQLSERVER_DB, SQLSERVER_USER, SQLSERVER_PWD, SQLSERVER_HOST, SQLSERVER_
 export const sequelize = new Sequelize(SQLSERVER_DB, SQLSERVER_USER, `${SQLSERVER_PWD}`, {
     dialect: "mssql",
     host: SQLSERVER_HOST, 
-    port: SQLSERVER_PORT     
+    port: SQLSERVER_PORT,
+    //define options due the new security standar on SQL server
+    dialectOptions: {
+        options: {
+        encrypt: true,
+        trustServerCertificate: true
+        }
+    }
 });
 
 export async function testConnection(){
