@@ -9,7 +9,10 @@ window.addEventListener("load", () =>{
     const deliveredLabel = document.querySelector("#deliveredLabel");
     const resetLink = document.querySelector("#resetLink");
 
-    
+    //cada recepción de eventos socket del servidor se efectua de forma sincronica dentro de este flujo de código del lado del cliente, por ejemplo, 
+    //al escuchar el evento "server-loadScreens", se van a procesar todos los registros que devuelva este evento, una vez procesado todos los 
+    //registros, lo siguiente que se va a hacer es recepcionar el evento socket "serverSendCliInfo", recepción que se define justo despues de la recepción 
+    //de "server-loadScreens"  
 
     socket.on("server-loadScreens", screens => {
         orderMonitor.innerHTML = "";
