@@ -4,8 +4,8 @@ import Clientes from "./model/Clientes.model";
 import Comanda from "./model/Comanda.model";
 import { col, fn, Op } from "sequelize";
 //socket lado del servidor
-//io representa a todas las ventanas que accedieron a localhost:3001, socket se refiere a una sola ventana que emitió un evento
-//al socket servidor
+//io representa a todas las ventanas que accedieron a localhost:3001 (es nuestro servidor de socket del archivo index.js), socket 
+//se refiere a ventanas del lado del cliente que emitieron un evento al socket servidor
 export default (io) =>{
     io.on('connection', (socket) =>{
         CocinaBar.sync();
