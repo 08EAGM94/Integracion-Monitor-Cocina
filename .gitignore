@@ -2,7 +2,8 @@
 node_modules
 dist
 .vscode
-Dockerfile
+Dockerfile.dev
+Dockerfile.prod
 Dockerfile.sql
 .dockerignore
 docker-compose.yml
