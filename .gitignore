@@ -3,5 +3,9 @@ node_modules
 dist
 .vscode
 Dockerfile
+Dockerfile.sql
 .dockerignore
 docker-compose.yml
+avocadoBackup/
+leeme.txt
+restore.sh
