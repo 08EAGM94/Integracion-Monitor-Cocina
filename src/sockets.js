@@ -4,22 +4,21 @@ import Clientes from "./model/Clientes.model";
 import Comanda from "./model/Comanda.model";
 import { col, fn, Op } from "sequelize";
 //socket lado del servidor
-//io representa a todas las ventanas que accedieron a localhost:3001 (es nuestro servidor de socket del archivo index.js), socket 
-//se refiere a ventanas del lado del cliente que emitieron un evento al socket servidor
+//io es nuestro servidor de socket del archivo index.js, practicamente está a la escucha de cualquier petición HTTP ingresada a nuestro servidor (ejemplo: localhost:3000), socket 
+//es en si los eventos socket que las ventanas del lado del cliente emitieron al socket servidor.
 export default (io) =>{
     io.on('connection', (socket) =>{
         CocinaBar.sync();
         Clientes.sync();
         Comanda.sync();
+        Order.sync();
         const emitScreens = async () =>{
-            //CocinaBar.sync();
             const screens = await CocinaBar.findAll({attributes: ["ID", "IdComanda", [fn("FORMAT", col("Fecha"), 'dd/MM/yyyy hh:mm tt'), "hora"],
                 "IdEstado", "IdZonaProduccion"]});
             io.emit("server-loadScreens", screens);
         }
     
         const emitTickets = async () =>{
-            Order.sync();
             const orders = await Order.findAll();
             io.emit("server-loadOrders", orders);
         }
