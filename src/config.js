@@ -1,6 +1,7 @@
+/*
 import { config } from "dotenv";
 config();
-
+*/
 //best for docker containers
 export const PORT = process.env.PORT || 3001;
 
