@@ -1,49 +1,94 @@
 <!DOCTYPE html>
-<html lang="es">
+<htm lang="es">
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>Capturar Pedido</title>
         <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
-        <link rel="stylesheet" type="text/css" href="assets/css/pantalla.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/capturar.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/responsive.capturar.css"/>
         <link rel="stylesheet" type="text/css" href="assets/fonts/Outfit/outfit.css"/>
-        <link rel="stylesheet" type="text/css" href="assets/css/responsive.css"/>
-        <title>Pantalla-demo</title>
-        
+        <script type="text/javascript" src="assets/js/capturar.js" type="module"></script>
         <script src="/socket.io/socket.io.js"></script>
-        
-        
     </head>
 
     <body>
-        <header class="restaurant-header">
-            <div class="header__elAguacate-container">
-                <img class="header__img" src="assets/img/2025-07-09 21_14_07-Facebook — Mozilla Firefox.png"/>
-            </div>
+        <header class="capturar__header">
+            <h1>Capturar Pedido</h1>
+
+            <nav>
+                <ul>
+                    <li><a class="header__link" href="kitchen-monitor.html">Monitor Cocina</a></li>
+                    <li><a class="header__link" href="tickets.html">Pantalla Tickets</a></li>
+                    <li><a class="header__link" href="employee-tickets.html">Tickets Empleados</a></li>
+                </ul>
+            </nav>
         </header>
 
-        <div class="softappetit-container">
-            <img class="softappetit__img" src="assets/img/unnamed.png"/>
+        <div class="button-wrapper">
+            <button class="pedido-btn" id="newOrder">
+                Nuevo Pedido
+            </button>
+
+            <button class="limpiar-btn" id="deleteOrders">
+                Limpiar Pedidos
+            </button>
+        </div> 
+        
+
+        <div class="backgroud-window__zone hidthis" id="selected-option-zone">
+
+            <div class="selected-option__window hidthis" id="selected-option-window"> 
+                <div class="window__caoution">
+                    <img class="caution__img" src="assets/img/[CITYPNG.COM]Warning Caution Triangle Mark Black Icon FREE PNG - 1500x1500.png"/>
+                </div>
+                <div class="caution__message"><h2 id="caution-message"></h2></div>
+    
+            </div>
+
+            <div class="selected-option__confirmation hidthis" id="option-window-confirmation">
+                <div class="selected-option__icon-wrap" id="iconWrap">
+                    <img class="selected-option__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>
+                </div>
+                <div class="confirm__message"><h2 id="confirm__message"></h2></div>
+                <div class="confirm__btn" id="confirm-btn">OK</div>
+            </div>
+
+            <div class="new-order__window hidthis" id="orderWindow">
+                <form class="window-form" id="orderForm">
+                    <div class="window-form__cancel-btn" id="pattsu">X</div>
+                    <h2 class="window-form__title">Ordenar</h2>
+
+                    <div class="window-form__comanda-field-wrapper">
+                    <label class="comanda-label" for="comanda-id">No. Comanda</label>
+                    <input class="comanda-input" id="comanda-id" type="text" name="no-comanda"/>
+                    </div>
+
+                    <div class="window-form__customer-field-wrapper">
+                    <label class="customer-label" for="customer-name">Nombre del Cliente</label>
+                    <input class="customer-input" id="customer-name" type="text" name="cliente-nombre"/>
+                    </div>
+
+                    <div class="window-form__btn-wrapper">
+                    <input class="window-form__btn" type="submit" value="Guardar" id="saveBtn"/>
+                    </div>
+                </form>
+            </div>
+
         </div>
 
-        <main class="order-screen">
-            <div class="order__comanda-screen">
-                <div class="comanda-screen__header"><span class="comanda-screen__title">En proceso</span></div>
-                <!--Etiqueta de proceso-->
-                
-                <div class="comanda-screen__comanda-id-wrapper" id="screen1">
-                    
-                </div>
+        <main class="order-view__zone">
+            <div class="order-view__fields-wrapper">
+                <div class="order-view__field">ID</div>
+                <div class="order-view__field">No. Monitor</div>
+                <div class="order-view__field">No. Comanda</div>
+                <div class="order-view__field">Nombre del Cliente</div>
+                <div class="order-view__field">Estatus</div>
             </div>
+            <div class="order-view__rows-zone" id="rowsZone"></div>
 
-            <div class="order__finish-screen">
-                <div class="finish-screen__header"><span class="finish-screen__title">Terminado</span></div>
-                <!--Etiqueta de finalización-->
-                
-                <div class="finish-screen__finish-id-wrapper" id="screen2">
-                    
-                </div>
-            </div>
         </main>
+
     </body>
-    <script type="text/javascript" src="assets/js/main.js"></script>
-</html>
+    
+</htm>
