@@ -53,8 +53,10 @@ export default (io) =>{
 
         socket.on("clientUpdateStatus", async (update) =>{
             try{
-                const escapedEstatus = htmlSpecialChars(update.estatus);
+                
+                
                 if(update.idMonitor === "Sin asignar" && update.id){
+                    const escapedEstatus = htmlSpecialChars(update.estatus);
                     await Order.update(
                         { estatus: escapedEstatus},
                         {
@@ -75,6 +77,7 @@ export default (io) =>{
                     );
                     emitScreens();
                 }else{
+                    const escapedEstatus = htmlSpecialChars(update.estatus);
                     await Order.update(
                         { estatus: escapedEstatus },
                         {
@@ -96,6 +99,7 @@ export default (io) =>{
                     emitScreens();
                     emitTickets();
                 }
+                
             }catch(err){
                 console.error("inconcistencia en los datos: ", err);
             }
