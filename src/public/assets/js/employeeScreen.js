@@ -2,17 +2,11 @@ window.addEventListener("load", () =>{
 
     const socket = io();
 
-    var comandaScreen = document.querySelector("#screen1");
-    var finishZone = document.querySelector("#screen2");
-    var cautionWindow = document.querySelector("#cautionWindow");
-    var backgroundWindow = document.querySelector("#backgroudZone");
-    var cautionMessage = document.querySelector("#caution-message");
-    var confirmationWindow = document.querySelector("#windowConfirmation");
-    var confirmationMessage = document.querySelector("#confirm__message");
+    const comandaScreen = document.querySelector("#screen1");
+    const finishZone = document.querySelector("#screen2");
+    const backgroundWindow = document.querySelector("#backgroudZone");
+    const popUpWindow = document.querySelector("#popUpWindow");
     
-
-    const cautionNoBtn = document.querySelector("#caution-cancel");
-    const confirmBtn = document.querySelector("#confirm-btn");
     const softIcon = document.querySelector(".softappetit-container");
 
 
@@ -43,19 +37,6 @@ window.addEventListener("load", () =>{
     
     //-------------EVENTS----------------------------------------------------
 
-    cautionNoBtn.addEventListener("click", () =>{
-        const yesBtn = cautionWindow.querySelector(".caution__yes-btn");
-        backgroundWindow.classList.add("hidthis");
-        cautionWindow.classList.add("hidthis");
-        if(yesBtn){
-            yesBtn.remove();
-        }
-    });
-
-    confirmBtn.addEventListener("click", () =>{
-        backgroundWindow.classList.add("hidthis");
-        confirmationWindow.classList.add("hidthis");
-    });
 
     if(window.innerWidth <= 1200){
         softIcon.classList.add("increseWidth");
@@ -92,18 +73,31 @@ window.addEventListener("load", () =>{
 
         const deleteBtn = ticketDiv.querySelector(".delivered-btn");
         deleteBtn.addEventListener("click", () =>{
-            console.log(deleteBtn.dataset.id);
-            backgroundWindow.classList.remove("hidthis");
-            cautionWindow.classList.remove("hidthis");
-            cautionMessage.innerHTML = `¿Confirmar entrega?`;
-            cautionYesBtn.innerHTML = `<div class="caution__yes-btn" data-id="${deleteBtn.dataset.id}">Si</div>`;
-            cautionWindow.append(cautionYesBtn);
 
-            const yesBtn = cautionWindow.querySelector(".caution__yes-btn");
+            backgroundWindow.classList.remove("hidthis");
+
+            const iconWrap = document.createElement("div")
+            iconWrap.classList.add("pop-up-window__icon-wrap");
+            const popUpMessage = document.createElement("div")
+            popUpMessage.classList.add("pop-up-window__message");
+            const popUpBtnsWrapper = document.createElement("div")
+            popUpBtnsWrapper.classList.add("btns-wrapper");
+
+            iconWrap.innerHTML = '<div class="window__caoution"><img class="caution__img" src="assets/img/caution-sign_75243.png"/></div>';
+            popUpMessage.innerHTML = `<h2>¿Deseas cambiar el pedido con folio de comanda "${order.numero_comanda}" a "entregado"?</h2>`;
+            popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn" data-id="${deleteBtn.dataset.id}">Si</button>
+                <button class="caution__no-btn">No</button>`;
+            
+            popUpWindow.append(iconWrap);
+            popUpWindow.append(popUpMessage);
+            popUpWindow.append(popUpBtnsWrapper);
+
+            const yesBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
             yesBtn.addEventListener("click", () =>{
-                cautionWindow.classList.add("hidthis");
-                confirmationWindow.classList.remove("hidthis");
-                confirmationMessage.innerHTML = `ID "${order.numero_comanda}" Entregado`;
+                iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                popUpMessage.innerHTML = `<h2>El pedido con el folio de comanda "${order.numero_comanda}" ha sido entregado</h2>`;
+                popUpBtnsWrapper.innerHTML = `<button class="confirm__btn">OK</button>`;
+                popUpBtnsWrapper.classList.add("btn-center");
                 if(order.numero_monitor == null){
                     socket.emit("clientUpdateStatus", {
                         id: yesBtn.dataset.id,
@@ -118,7 +112,21 @@ window.addEventListener("load", () =>{
                     });
                 }
                 
-                yesBtn.remove();
+                const okBtn = popUpBtnsWrapper.querySelector(".confirm__btn");
+                okBtn.addEventListener("click", () =>{
+                    iconWrap.remove();
+                    popUpMessage.remove();
+                    popUpBtnsWrapper.remove();
+                    backgroundWindow.classList.add("hidthis");
+                });
+            });
+
+            const noBtn = popUpBtnsWrapper.querySelector(".caution__no-btn")
+            noBtn.addEventListener("click", () =>{
+                iconWrap.remove();
+                popUpMessage.remove();
+                popUpBtnsWrapper.remove();
+                backgroundWindow.classList.add("hidthis");
             });
         });
 
@@ -128,4 +136,3 @@ window.addEventListener("load", () =>{
     //-------------UI FUNCTION----------------------------------------------------
 
 });
-

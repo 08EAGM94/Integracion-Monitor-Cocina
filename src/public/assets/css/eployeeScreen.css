@@ -60,21 +60,21 @@ body{
     overflow: hidden;
     width: 39%;
     background: var(--color-secondary);
-    height: 87vh;
+    height: 84vh;
 }
 
 .comanda-screen__comanda-id-wrapper,
 .finish-screen__finish-id-wrapper{
     overflow-y: auto;
     width: 100%;
-    height: 87%;
+    height: 70vh;
 }
 
 .order__finish-screen{
     overflow: hidden;
     width: 60%;
     background: var(--color-secondary);
-    height: 87vh;
+    height: 84vh;
 }
 
 
@@ -98,10 +98,9 @@ body{
 .finish-screen__finish-id{
     position: relative;
     width: 98%;
-    height: 21%;
     text-align: center;
     padding-top: 2rem;
-    padding-bottom: 1%;
+    padding-bottom: 2rem;
     background-color: var(--background-color);
     margin-bottom: 1rem;
     margin-left: 1%;
@@ -115,7 +114,6 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
     padding-top: 0;
-    height: 18%;
 }
 
 
@@ -152,6 +150,9 @@ body{
 
 .comanda-id__client-id,
 .comanda-id__client-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 2.8rem;
 }
 
@@ -206,14 +207,17 @@ body{
 .delivered-btn{
     cursor: pointer;
     position: absolute;
-    left: 40vw;
-    top: 1vw;
-    height: 9vh;
-    width: 10vh;
-    font-size: 5.5vh;
+    right: 0;
+    top: 0;
+    height: 5rem;
+    width: 5rem;
+    font-size: 3rem;
     border: 0.1rem solid var(--color-secondary);
     border-radius: 50%;
     background-color: salmon;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .backgroud-window__zone::before{
@@ -225,43 +229,54 @@ body{
     height: 100%;
     opacity: 0.5;
     top: 0;
+    left: 0;
     transition: all 300ms ease-out;
 }
 
-.selected-option__window,
-.selected-option__confirmation{
-    position: absolute;
+.pop-up-window{
+    position: fixed;
     z-index: 999;
     width: 34%;
-    height: 44%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*height: 44%;*/
     background: var(--color-primary);
-    top: 28%;
-    left: 33%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     transition: all 300ms ease-out;
+}
+
+
+.pop-up-window__icon-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    margin-top: 2rem;
 }
 
 .window__caoution{
     position: relative;
-    width: 24%;
-    height: 38%;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
-    margin-left: 37%;
-    margin-top: 3%;
     border: 0.5rem solid var(--color-secondary);
     border-radius: 50%;
 }
 
 .caution__img{
-    position: absolute;
-    bottom: 18%;
-    left: 14%;
     width: 73%;
     height: 73%;
 }
 
 .caution__message {
-  margin-top: 2%;
-  margin-left: 16%;
+  text-align: center;
   font-size: 3rem;
 }
 
@@ -269,10 +284,7 @@ body{
 .caution__no-btn,
 .confirm__btn{
     cursor: pointer;
-    position: absolute;
-    top: 82%;
     width: 25%;
-    height: 12%;
     text-align: center;
     background: var(--color-secondary);
     color: var(--color-primary);
@@ -281,18 +293,6 @@ body{
     transition: all 300ms ease-out;
 }
 
-.caution__yes-btn{
-    left: 8%;
-}
-
-.caution__no-btn{
-    z-index: 1;
-    left: 70%;
-}
-
-.confirm__btn{
-    left: 40%;
-}
 
 .caution__yes-btn:hover,
 .caution__yes-btn:focus,
@@ -305,14 +305,25 @@ body{
     border: 0.1rem solid var(--color-secondary);
 }
 
-.selected-option__icon-wrap{
-    width: 29%;
-    margin-left: 36%;
+.pop-up-window__icon{
+    width: 50%;
+    height: 100%;
 }
 
-.confirm__message{
-    margin-left: 23%;
-    margin-right: 11%;
-    margin-top: 5%;
-    font-size: 2rem;
+.pop-up-window__message{
+    width: 95%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.btns-wrapper{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.btn-center{
+    justify-content: center;
 }

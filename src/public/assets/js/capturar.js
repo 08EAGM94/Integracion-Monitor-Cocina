@@ -3,19 +3,12 @@ window.addEventListener("load", () =>{
     const socket = io();
     
     const selectWindowZone = document.querySelector("#selected-option-zone");
-    const selectWindow = document.querySelector("#selected-option-window");
-    const selectWindowConfirmation = document.querySelector("#option-window-confirmation");
-    const cautionMessage = document.querySelector("#caution-message");
-    const confirmationMessage = document.querySelector("#confirm__message");
+    const popUpWindow = document.querySelector("#popUpWindow");
 
-    const orderForm = document.querySelector("#orderForm");
-    const orderWindow = document.querySelector("#orderWindow");
-    const confirmationBtn = document.querySelector("#confirm-btn");
     const orderBtn = document.querySelector("#newOrder")
     const rowsZone = document.querySelector("#rowsZone");
-    const formCancelBtn = document.querySelector("#pattsu");
     const cleanBtn = document.querySelector("#deleteOrders");
-    const confirmationIcon = document.querySelector("#iconWrap");
+    
      
     
 
@@ -37,269 +30,458 @@ window.addEventListener("load", () =>{
 
     //-------------EVENTS----------------------------------
     
-    confirmationBtn.addEventListener("click", () =>{
-        const orderCautionIcon = selectWindowConfirmation.querySelector("#orderCautionIcon");
-        selectWindowZone.classList.add("hidthis");
-        selectWindowConfirmation.classList.add("hidthis");
-        if(orderCautionIcon){
-            confirmationIcon.innerHTML = '<img class="selected-option__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
-        }
-    });
     
     orderBtn.addEventListener("click", () =>{
         selectWindowZone.classList.remove("hidthis");
-        orderWindow.classList.remove("hidthis");
-    });
- 
+        if(popUpWindow.className.includes("activate-pop-out")) popUpWindow.classList.remove("activate-pop-out");
+        popUpWindow.classList.add("activate-pop-up");
+        popUpWindow.innerHTML = `
+            <form class="window-form" id="orderForm">
+                <div class="window-form__cancel-btn" id="pattsu">X</div>
+                <h2 class="window-form__title">Ordenar</h2>
 
-    orderForm.addEventListener("submit", (e) =>{
-        e.preventDefault();
-        if(orderForm["comanda-id"].value == "" || orderForm["customer-name"].value == ""){
-            orderWindow.classList.add("hidthis");
-            selectWindowConfirmation.classList.remove("hidthis");
-            confirmationIcon.innerHTML = '<img class="caution__img" style="position: relative;bottom: -1%;left: 10%;width: 73%;height: 73%;" id="orderCautionIcon" src="assets/img/[CITYPNG.COM]Warning Caution Triangle Mark Black Icon FREE PNG - 1500x1500.png"/>';
-            confirmationMessage.innerHTML = "Los campos están vacios, se tiene que escribir un Id de comanda y el nombre del cliente";
-        }else{
-            orderWindow.classList.add("hidthis");
-            selectWindowConfirmation.classList.remove("hidthis");
-            confirmationMessage.innerHTML = `Se agregó un pedido con la comanda "${orderForm["comanda-id"].value}" y cliente "${orderForm["customer-name"].value}" correctamente`;
-            socket.emit("clientNewOrder", {
-                numero_comanda: `${orderForm["comanda-id"].value}`,
-                nombre_cliente: `${orderForm["customer-name"].value}`,
-                estatus: "Ordenado"
-            });
-            orderForm["comanda-id"].value = "";
-            orderForm["customer-name"].value = "";
-        }
-        
-    });
+                <div class="window-form__comanda-field-wrapper">
+                <label class="comanda-label" for="comanda-id">No. Comanda</label>
+                <input class="comanda-input" id="comanda-id" type="text" name="no-comanda"/>
+                </div>
 
-    formCancelBtn.addEventListener("click", () =>{
-        selectWindowZone.classList.add("hidthis");
-        orderWindow.classList.add("hidthis");
-    });
+                <div class="window-form__customer-field-wrapper">
+                <label class="customer-label" for="customer-name">Nombre del Cliente</label>
+                <input class="customer-input" id="customer-name" type="text" name="cliente-nombre"/>
+                </div>
 
+                <div class="window-form__btn-wrapper">
+                <input class="window-form__btn" type="submit" value="Guardar" id="saveBtn"/>
+                </div>
+            </form>
+        `;
+
+        const orderForm = popUpWindow.querySelector("#orderForm");
+        const closeBtn = orderForm.querySelector("#pattsu");
+
+        closeBtn.addEventListener("click", () =>{
+            popUpWindow.classList.remove("activate-pop-up");
+            popUpWindow.classList.add("activate-pop-out");
+            setTimeout(() => {
+                popUpWindow.innerHTML = "";
+                selectWindowZone.classList.add("hidthis");
+            }, 200);
+            
+        });
+
+        orderForm.addEventListener("submit", (e) =>{
+            e.preventDefault();
+
+            popUpWindow.innerHTML = "";
+
+            const iconWrap = document.createElement("div")
+            iconWrap.classList.add("pop-up-window__icon-wrap");
+            const popUpMessage = document.createElement("div")
+            popUpMessage.classList.add("pop-up-window__message");
+            const popUpBtnsWrapper = document.createElement("div")
+            popUpBtnsWrapper.classList.add("btns-wrapper");
+            popUpBtnsWrapper.classList.add("btn-center");
+            popUpWindow.append(iconWrap);
+            popUpWindow.append(popUpMessage);
+            popUpWindow.append(popUpBtnsWrapper);
+
+            if(orderForm["comanda-id"].value == "" || orderForm["customer-name"].value == ""){
+
+                iconWrap.innerHTML = '<div class="window__caoution"><img class="caution__img" src="assets/img/caution-sign_75243.png"/></div>';
+                popUpMessage.innerHTML = "<h2>Los campos están vacios, se tiene que escribir un Id de comanda y el nombre del cliente</h2>";
+                popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn">OK</button>`;
+                const okBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
+                
+                okBtn.addEventListener("click", () =>{
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200);   
+                     
+                });
+            
+            }else{
+
+                iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                popUpMessage.innerHTML = `<h2>Se agregó un pedido con la comanda "${orderForm["comanda-id"].value.replace(/"/g, '&quot;').replace(/'/g, '&#039;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}" y cliente "${orderForm["customer-name"].value.replace(/"/g, '&quot;').replace(/'/g, '&#039;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}" correctamente</h2>`;
+                socket.emit("clientNewOrder", {
+                    numero_comanda: `${orderForm["comanda-id"].value}`,
+                    nombre_cliente: `${orderForm["customer-name"].value}`,
+                    estatus: "Ordenado"
+                });
+                popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn">OK</button>`;
+                const okBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
+                okBtn.addEventListener("click", () =>{
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200);
+                });
+                
+            }
+            
+        });
+    });
+    
     cleanBtn.addEventListener("click", () =>{
-        const cautionBtn = document.createElement("div");
-        const cautionNoBtn = document.createElement("div");
-        selectWindowZone.classList.remove("hidthis");
-        selectWindow.classList.remove("hidthis");
-        cautionMessage.innerHTML = "¿Deseas eliminar todos las ordenes?";
-        cautionBtn.innerHTML = '<div class="caution__yes-btn">Si</div>';
-        cautionNoBtn.innerHTML = '<div class="caution__no-btn">No</div>';
-        selectWindow.append(cautionBtn);
-        selectWindow.append(cautionNoBtn);
 
-        const afirmativeBtn = selectWindow.querySelector(".caution__yes-btn");
+        selectWindowZone.classList.remove("hidthis");
+        if(popUpWindow.className.includes("activate-pop-out")) popUpWindow.classList.remove("activate-pop-out");
+        popUpWindow.classList.add("activate-pop-up");
+        
+        const iconWrap = document.createElement("div")
+        iconWrap.classList.add("pop-up-window__icon-wrap");
+        const popUpMessage = document.createElement("div")
+        popUpMessage.classList.add("pop-up-window__message");
+        const popUpBtnsWrapper = document.createElement("div")
+        popUpBtnsWrapper.classList.add("btns-wrapper");
+        popUpWindow.append(iconWrap);
+        popUpWindow.append(popUpMessage);
+        popUpWindow.append(popUpBtnsWrapper);
+        
+        iconWrap.innerHTML = '<div class="window__caoution"><img class="caution__img" src="assets/img/caution-sign_75243.png"/></div>';
+        popUpMessage.innerHTML = "<h2>¿Deseas eliminar todos los pedidos?</h2>";
+        popUpBtnsWrapper.innerHTML = `<div class="caution__yes-btn">Si</div>
+        <div class="caution__no-btn">No</div>
+        `;
+        const afirmativeBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
         afirmativeBtn.addEventListener("click", () =>{
-            selectWindow.classList.add("hidthis");
-            selectWindowConfirmation.classList.remove("hidthis");
-            confirmationMessage.innerHTML = "Las ordenes han sido eliminadas";
+            iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+            popUpMessage.innerHTML = "<h2>Las ordenes han sido eliminadas</h2>";
+            popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn">OK</button>`;
+            popUpBtnsWrapper.classList.add("btn-center");
             const idArr = [7,10,13,17,22,23];
             socket.emit("clientUpdateIds", idArr);
             socket.emit("clientDeleteAll", {
                 clientSay: "yes"
             });
-            cautionNoBtn.remove();
-            cautionBtn.remove();
+            const okBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
+            okBtn.addEventListener("click", () =>{
+                popUpWindow.classList.remove("activate-pop-up");
+                popUpWindow.classList.add("activate-pop-out");
+                setTimeout(() => {
+                    iconWrap.remove();
+                    popUpMessage.remove();
+                    popUpBtnsWrapper.remove();
+                    selectWindowZone.classList.add("hidthis");
+                }, 200);
+            });    
         });
 
-        const noBtn = selectWindow.querySelector(".caution__no-btn")
+        const noBtn = popUpBtnsWrapper.querySelector(".caution__no-btn")
         noBtn.addEventListener("click", () =>{
-            selectWindowZone.classList.add("hidthis");
-            selectWindow.classList.add("hidthis");
-            cautionBtn.remove();
-            cautionNoBtn.remove();
+            popUpWindow.classList.remove("activate-pop-up");
+            popUpWindow.classList.add("activate-pop-out");
+            setTimeout(() => {
+                iconWrap.remove();
+                popUpMessage.remove();
+                popUpBtnsWrapper.remove();
+                selectWindowZone.classList.add("hidthis");
+            }, 200);
         });                        
     });
 
     //-------------EVENTS----------------------------------
 
     //-------------UI FUNCTION----------------------------------
-
+    
     const rowGenerator = order => {
         let numero_monitor = "";
-        const rowDiv = document.createElement("div");
-        rowDiv.classList.add("order-view__rows-wrapper");
+        const tableRow = document.createElement("tr");
+        tableRow.classList.add("rowsZone__trow");
         (order.numero_monitor == null) ? numero_monitor = "Sin asignar" : numero_monitor = order.numero_monitor;
-        rowDiv.innerHTML = `
-        <div class="order-view__rows">${order.order_id}</div>
-        <div class="order-view__rows">${numero_monitor}</div>
-        <div class="order-view__rows">${order.numero_comanda}</div>
-        <div class="order-view__rows">${order.nombre_cliente}</div>
-        <div class="order-view__rows">
-            <div class="select__screen-status">${order.estatus}</div>
+        tableRow.innerHTML = `
+        <td class="trow-column">${order.order_id}</td>
+        <td class="trow-column">${numero_monitor}</td>
+        <td class="trow-column">${order.numero_comanda}</td>
+        <td class="trow-column">${order.nombre_cliente}</td>
+        <td class="trow-column">
             <select class="row__select" data-id="${order.order_id}" name="status">
-                <option value="Ordenado">Ordenado</option>
-                <option value="Proceso">Proceso</option>
-                <option value="Terminado">Terminado</option>
-                <option value="Entregado">Entregado</option>
+                <option value="Ordenado" ${(order.estatus === "Ordenado") ? "selected" : ""}>Ordenado</option>
+                <option value="Proceso" ${(order.estatus === "Proceso") ? "selected" : ""}>Proceso</option>
+                <option value="Terminado" ${(order.estatus === "Terminado") ? "selected" : ""}>Terminado</option>
+                <option value="Entregado" ${(order.estatus === "Entregado") ? "selected" : ""}>Entregado</option>
             </select>
-        </div>
+        </td>
+        <td class="trow-column">
+            <button class="delete-order-btn" data-id="${order.order_id}">X</button>
+        </td>
         `;
         
-        const optionElem = rowDiv.querySelector(".row__select");
-        optionElem.onchange = () => {
-            console.log(optionElem.dataset.id);
-            if(optionElem.value == "Proceso"){
-                const cautionYesBtnProccess = document.createElement("div");
-                const cautionNoBtnProccess = document.createElement("div");
-                selectWindowZone.classList.remove("hidthis");
-                selectWindow.classList.remove("hidthis");
-                cautionMessage.innerHTML = `¿Deseas cambiar a ${optionElem.value}?`;
-                cautionYesBtnProccess.innerHTML = `<div class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</div>`;
-                cautionNoBtnProccess.innerHTML = `<div class="caution__no-btn" data-id="${optionElem.dataset.id}">No</div>`;
-                selectWindow.append(cautionYesBtnProccess);
-                selectWindow.append(cautionNoBtnProccess);
+        const optionElem = tableRow.querySelector(".row__select");
+        const deleteBtn = tableRow.querySelector(".delete-order-btn");
+        deleteBtn.addEventListener("click", () =>{
+            
+            selectWindowZone.classList.remove("hidthis");
+            if(popUpWindow.className.includes("activate-pop-out")) popUpWindow.classList.remove("activate-pop-out");
+            popUpWindow.classList.add("activate-pop-up");
 
-                const yesBtnProccess = selectWindow.querySelector(".caution__yes-btn");
+            const iconWrap = document.createElement("div")
+            iconWrap.classList.add("pop-up-window__icon-wrap");
+            const popUpMessage = document.createElement("div")
+            popUpMessage.classList.add("pop-up-window__message");
+            const popUpBtnsWrapper = document.createElement("div")
+            popUpBtnsWrapper.classList.add("btns-wrapper");
+
+            iconWrap.innerHTML = '<div class="window__caoution"><img class="caution__img" src="assets/img/caution-sign_75243.png"/></div>';
+            popUpMessage.innerHTML = `<h2>¿Deseas eliminar el pedido con ID ${optionElem.dataset.id}?</h2>`;
+            popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</button>
+                <button class="caution__no-btn">No</button>`;
+            
+            popUpWindow.append(iconWrap);
+            popUpWindow.append(popUpMessage);
+            popUpWindow.append(popUpBtnsWrapper);
+
+            const yesBtn = popUpBtnsWrapper.querySelector(".caution__yes-btn");
+            yesBtn.addEventListener("click", () =>{
+                iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                popUpMessage.innerHTML = `<h2>Pedido con ID - "${yesBtn.dataset.id}" eliminado exitosamente</h2>`;
+                popUpBtnsWrapper.innerHTML = `<button class="confirm__btn" data-id="${optionElem.dataset.id}">OK</button>`;
+                popUpBtnsWrapper.classList.add("btn-center");
+                socket.emit("clientDeleteOrder", {id: yesBtn.dataset.id, idMonitor: numero_monitor});
+                const okBtn = popUpBtnsWrapper.querySelector(".confirm__btn");
+                okBtn.addEventListener("click", () =>{
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200);
+                });
+            });
+
+            const noBtn = popUpBtnsWrapper.querySelector(".caution__no-btn")
+            noBtn.addEventListener("click", () =>{
+                popUpWindow.classList.remove("activate-pop-up");
+                popUpWindow.classList.add("activate-pop-out");
+                setTimeout(() => {
+                    iconWrap.remove();
+                    popUpMessage.remove();
+                    popUpBtnsWrapper.remove();
+                    selectWindowZone.classList.add("hidthis");
+                }, 200);
+            });
+
+        });
+
+        optionElem.onchange = () => {
+
+            selectWindowZone.classList.remove("hidthis");
+            if(popUpWindow.className.includes("activate-pop-out")) popUpWindow.classList.remove("activate-pop-out");
+            popUpWindow.classList.add("activate-pop-up");
+        
+            const iconWrap = document.createElement("div")
+            iconWrap.classList.add("pop-up-window__icon-wrap");
+            const popUpMessage = document.createElement("div")
+            popUpMessage.classList.add("pop-up-window__message");
+            const popUpBtnsWrapper = document.createElement("div")
+            popUpBtnsWrapper.classList.add("btns-wrapper");
+
+            iconWrap.innerHTML = '<div class="window__caoution"><img class="caution__img" src="assets/img/caution-sign_75243.png"/></div>';
+            popUpMessage.innerHTML = `<h2>¿Deseas cambiar el estatus del pedido con ID ${optionElem.dataset.id} a ${optionElem.value}?</h2>`;
+            popUpBtnsWrapper.innerHTML = `<button class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</button>
+                <button class="caution__no-btn">No</button>`;
+            
+            popUpWindow.append(iconWrap);
+            popUpWindow.append(popUpMessage);
+            popUpWindow.append(popUpBtnsWrapper);
+
+            if(optionElem.value == "Proceso"){
+                
+
+                const yesBtnProccess = popUpBtnsWrapper.querySelector(".caution__yes-btn");
                 yesBtnProccess.addEventListener("click", () =>{
-                    console.log(yesBtnProccess.dataset.id);
-                    selectWindow.classList.add("hidthis");
-                    selectWindowConfirmation.classList.remove("hidthis");
-                    confirmationMessage.innerHTML = `Pedido con ID - "${yesBtnProccess.dataset.id}" con estatus modificado con "${optionElem.value}"`;
+
+                    iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                    popUpMessage.innerHTML = `<h2>Pedido con ID - "${yesBtnProccess.dataset.id}" con estatus modificado exitosamente a "${optionElem.value}"</h2>`;
+                    popUpBtnsWrapper.innerHTML = `<button class="confirm__btn" data-id="${optionElem.dataset.id}">OK</button>`;
+                    popUpBtnsWrapper.classList.add("btn-center");
                     socket.emit("clientUpdateStatus", {
                         id: yesBtnProccess.dataset.id,
-                        estatus: `${optionElem.value}`,
+                        estatus: `${encodeURIComponent(optionElem.value)}`,
                         idMonitor: numero_monitor,
                         idEstatus: 2
                     });
-                    optionElem.value = "";
-                    cautionNoBtnProccess.remove();
-                    cautionYesBtnProccess.remove();
+                    const okBtnProccess = popUpBtnsWrapper.querySelector(".confirm__btn");
+                    okBtnProccess.addEventListener("click", () =>{
+                        popUpWindow.classList.remove("activate-pop-up");
+                        popUpWindow.classList.add("activate-pop-out");
+                        setTimeout(() => {
+                            iconWrap.remove();
+                            popUpMessage.remove();
+                            popUpBtnsWrapper.remove();
+                            selectWindowZone.classList.add("hidthis");
+                        }, 200);
+                    });       
                 });
 
-                const noBtnProccess = selectWindow.querySelector(".caution__no-btn")
+                const noBtnProccess = popUpBtnsWrapper.querySelector(".caution__no-btn")
                 noBtnProccess.addEventListener("click", () =>{
-                    selectWindowZone.classList.add("hidthis");
-                    selectWindow.classList.add("hidthis");
-                    //location.reload();
-                    optionElem.value = "";
-                    cautionYesBtnProccess.remove();
-                    cautionNoBtnProccess.remove(); 
+                    optionElem.innerHTML = `
+                        <option value="Ordenado" ${(order.estatus === "Ordenado") ? "selected" : ""}>Ordenado</option>
+                        <option value="Proceso" ${(order.estatus === "Proceso") ? "selected" : ""}>Proceso</option>
+                        <option value="Terminado" ${(order.estatus === "Terminado") ? "selected" : ""}>Terminado</option>
+                        <option value="Entregado" ${(order.estatus === "Entregado") ? "selected" : ""}>Entregado</option>
+                    `;
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200); 
                 });
 
             }else if(optionElem.value == "Terminado"){
-                const cautionYesBtnFinish = document.createElement("div");
-                const cautionNoBtnFinish = document.createElement("div");
-                selectWindowZone.classList.remove("hidthis");
-                selectWindow.classList.remove("hidthis");
-                cautionMessage.innerHTML = `¿Deseas cambiar a ${optionElem.value}?`;
-                cautionYesBtnFinish.innerHTML = `<div class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</div>`;
-                cautionNoBtnFinish.innerHTML = `<div class="caution__no-btn" data-id="${optionElem.dataset.id}">No</div>`;
-                selectWindow.append(cautionYesBtnFinish);
-                selectWindow.append(cautionNoBtnFinish);
 
-                const yesBtnFinish = selectWindow.querySelector(".caution__yes-btn");
+                const yesBtnFinish = popUpBtnsWrapper.querySelector(".caution__yes-btn");
                 yesBtnFinish.addEventListener("click", () =>{
-                    console.log(yesBtnFinish.dataset.id);
-                    selectWindow.classList.add("hidthis");
-                    selectWindowConfirmation.classList.remove("hidthis");
-                    confirmationMessage.innerHTML = `Pedido con ID - "${yesBtnFinish.dataset.id}" con estatus modificado con "${optionElem.value}"`;
+                    iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                    popUpMessage.innerHTML = `<h2>Pedido con ID - "${yesBtnFinish.dataset.id}" con estatus modificado exitosamente a "${optionElem.value}"</h2>`;
+                    popUpBtnsWrapper.innerHTML = `<button class="confirm__btn" data-id="${optionElem.dataset.id}">OK</button>`;
+                    popUpBtnsWrapper.classList.add("btn-center");
                     socket.emit("clientUpdateStatus", {
                         id: yesBtnFinish.dataset.id,
-                        estatus: `${optionElem.value}`,
+                        estatus: `${encodeURIComponent(optionElem.value)}`,
                         idMonitor: numero_monitor,
                         idEstatus: 3
                     });
-                    optionElem.value = "";
-                    cautionNoBtnFinish.remove(); 
-                    cautionYesBtnFinish.remove();
+                    const okBtnFinish = popUpBtnsWrapper.querySelector(".confirm__btn");
+                    okBtnFinish.addEventListener("click", () =>{
+                        popUpWindow.classList.remove("activate-pop-up");
+                        popUpWindow.classList.add("activate-pop-out");
+                        setTimeout(() => {
+                            iconWrap.remove();
+                            popUpMessage.remove();
+                            popUpBtnsWrapper.remove();
+                            selectWindowZone.classList.add("hidthis");
+                        }, 200);
+                    });
                 });
 
-                const noBtnFinish = selectWindow.querySelector(".caution__no-btn")
+                const noBtnFinish = popUpBtnsWrapper.querySelector(".caution__no-btn")
                 noBtnFinish.addEventListener("click", () =>{
-                    selectWindowZone.classList.add("hidthis");
-                    selectWindow.classList.add("hidthis");
-                    //location.reload();
-                    optionElem.value = "";
-                    cautionYesBtnFinish.remove();
-                    cautionNoBtnFinish.remove(); 
+                    optionElem.innerHTML = `
+                        <option value="Ordenado" ${(order.estatus === "Ordenado") ? "selected" : ""}>Ordenado</option>
+                        <option value="Proceso" ${(order.estatus === "Proceso") ? "selected" : ""}>Proceso</option>
+                        <option value="Terminado" ${(order.estatus === "Terminado") ? "selected" : ""}>Terminado</option>
+                        <option value="Entregado" ${(order.estatus === "Entregado") ? "selected" : ""}>Entregado</option>
+                    `;
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200); 
                 });
 
             }else if(optionElem.value == "Entregado"){
-                const cautionYesBtnDelivery = document.createElement("div");
-                const cautionNoBtnDelivery = document.createElement("div");
-                selectWindowZone.classList.remove("hidthis");
-                selectWindow.classList.remove("hidthis");
-                cautionMessage.innerHTML = `¿Deseas cambiar a ${optionElem.value}?`;
-                cautionYesBtnDelivery.innerHTML = `<div class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</div>`;
-                cautionNoBtnDelivery.innerHTML = `<div class="caution__no-btn" data-id="${optionElem.dataset.id}">No</div>`;
-                selectWindow.append(cautionYesBtnDelivery);
-                selectWindow.append(cautionNoBtnDelivery);
 
-                const yesBtnDelivery = selectWindow.querySelector(".caution__yes-btn");
+                const yesBtnDelivery = popUpBtnsWrapper.querySelector(".caution__yes-btn");
                 yesBtnDelivery.addEventListener("click", () =>{
-                    console.log(yesBtnDelivery.dataset.id);
-                    selectWindow.classList.add("hidthis");
-                    selectWindowConfirmation.classList.remove("hidthis");
-                    confirmationMessage.innerHTML = `Pedido con ID - "${yesBtnDelivery.dataset.id}" con estatus modificado con "${optionElem.value}"`;
+                    iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                    popUpMessage.innerHTML = `<h2>Pedido con ID - "${yesBtnDelivery.dataset.id}" con estatus modificado exitosamente a "${optionElem.value}"</h2>`;
+                    popUpBtnsWrapper.innerHTML = `<button class="confirm__btn" data-id="${optionElem.dataset.id}">OK</button>`;
+                    popUpBtnsWrapper.classList.add("btn-center");
                     socket.emit("clientUpdateStatus", {
                         id: yesBtnDelivery.dataset.id,
-                        estatus: `${optionElem.value}`,
+                        estatus: `${encodeURIComponent(optionElem.value)}`,
                         idMonitor: numero_monitor,
                         idEstatus: 4
                     });
-                    optionElem.value = "";
-                    cautionNoBtnDelivery.remove(); 
-                    cautionYesBtnDelivery.remove();
+                    const okBtnDelivery = popUpBtnsWrapper.querySelector(".confirm__btn");
+                    okBtnDelivery.addEventListener("click", () =>{
+                        popUpWindow.classList.remove("activate-pop-up");
+                        popUpWindow.classList.add("activate-pop-out");
+                        setTimeout(() => {
+                            iconWrap.remove();
+                            popUpMessage.remove();
+                            popUpBtnsWrapper.remove();
+                            selectWindowZone.classList.add("hidthis");
+                        }, 200);
+                    });
                 });
 
-                const noBtnDelivery = selectWindow.querySelector(".caution__no-btn")
+                const noBtnDelivery = popUpBtnsWrapper.querySelector(".caution__no-btn")
                 noBtnDelivery.addEventListener("click", () =>{
-                    selectWindowZone.classList.add("hidthis");
-                    selectWindow.classList.add("hidthis");
-                    //location.reload();
-                    optionElem.value = "";
-                    cautionYesBtnDelivery.remove();
-                    cautionNoBtnDelivery.remove(); 
+                    optionElem.innerHTML = `
+                        <option value="Ordenado" ${(order.estatus === "Ordenado") ? "selected" : ""}>Ordenado</option>
+                        <option value="Proceso" ${(order.estatus === "Proceso") ? "selected" : ""}>Proceso</option>
+                        <option value="Terminado" ${(order.estatus === "Terminado") ? "selected" : ""}>Terminado</option>
+                        <option value="Entregado" ${(order.estatus === "Entregado") ? "selected" : ""}>Entregado</option>
+                    `;
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200); 
                 });
 
             }else if(optionElem.value == "Ordenado"){
-                const cautionYesBtnOrder = document.createElement("div");
-                const cautionNoBtnOrder = document.createElement("div");
-                selectWindowZone.classList.remove("hidthis");
-                selectWindow.classList.remove("hidthis");
-                cautionMessage.innerHTML = `¿Deseas cambiar a ${optionElem.value}?`;
-                cautionYesBtnOrder.innerHTML = `<div class="caution__yes-btn" data-id="${optionElem.dataset.id}">Si</div>`;
-                cautionNoBtnOrder.innerHTML = `<div class="caution__no-btn" data-id="${optionElem.dataset.id}">No</div>`;
-                selectWindow.append(cautionYesBtnOrder);
-                selectWindow.append(cautionNoBtnOrder);
 
-                const yesBtnOrder = selectWindow.querySelector(".caution__yes-btn");
+                const yesBtnOrder = popUpBtnsWrapper.querySelector(".caution__yes-btn");
                 yesBtnOrder.addEventListener("click", () =>{
-                    console.log(yesBtnOrder.dataset.id);
-                    selectWindow.classList.add("hidthis");
-                    selectWindowConfirmation.classList.remove("hidthis");
-                    confirmationMessage.innerHTML = `Pedido con ID - "${yesBtnOrder.dataset.id}" con estatus modificado con "${optionElem.value}"`;
+                    iconWrap.innerHTML = '<img class="pop-up-window__icon" src="assets/img/favpng_714583ca183e15e3ab76a7e70b5cfc1b.png"/>';
+                    popUpMessage.innerHTML = `<h2>Pedido con ID - "${yesBtnOrder.dataset.id}" con estatus modificado exitosamente a "${optionElem.value}"</h2>`;
+                    popUpBtnsWrapper.innerHTML = `<button class="confirm__btn" data-id="${optionElem.dataset.id}">OK</button>`;
+                    popUpBtnsWrapper.classList.add("btn-center");
                     socket.emit("clientUpdateStatus", {
                         id: yesBtnOrder.dataset.id,
-                        estatus: `${optionElem.value}`,
+                        estatus: `${encodeURIComponent(optionElem.value)}`,
                         idMonitor: numero_monitor,
                         idEstatus: 1
                     });
-                    optionElem.value = "";
-                    cautionNoBtnOrder.remove();
-                    cautionYesBtnOrder.remove();
+                    const okBtnOrder = popUpBtnsWrapper.querySelector(".confirm__btn");
+                    okBtnOrder.addEventListener("click", () =>{
+                        popUpWindow.classList.remove("activate-pop-up");
+                        popUpWindow.classList.add("activate-pop-out");
+                        setTimeout(() => {
+                            iconWrap.remove();
+                            popUpMessage.remove();
+                            popUpBtnsWrapper.remove();
+                            selectWindowZone.classList.add("hidthis");
+                        }, 200);
+                    });
                 });
 
-                const noBtnOrder = selectWindow.querySelector(".caution__no-btn")
+                const noBtnOrder = popUpBtnsWrapper.querySelector(".caution__no-btn")
                 noBtnOrder.addEventListener("click", () =>{
-                    selectWindowZone.classList.add("hidthis");
-                    selectWindow.classList.add("hidthis");
-                    //location.reload();
-                    optionElem.value = "";
-                    cautionYesBtnOrder.remove();
-                    cautionNoBtnOrder.remove(); 
+                    optionElem.innerHTML = `
+                        <option value="Ordenado" ${(order.estatus === "Ordenado") ? "selected" : ""}>Ordenado</option>
+                        <option value="Proceso" ${(order.estatus === "Proceso") ? "selected" : ""}>Proceso</option>
+                        <option value="Terminado" ${(order.estatus === "Terminado") ? "selected" : ""}>Terminado</option>
+                        <option value="Entregado" ${(order.estatus === "Entregado") ? "selected" : ""}>Entregado</option>
+                    `;
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() => {
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        selectWindowZone.classList.add("hidthis");
+                    }, 200);
                 });
 
             }
         };
-        return rowDiv;
+        return tableRow;
     }
 
     //-------------UI FUNCTION----------------------------------
 });
-
-
-

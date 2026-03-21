@@ -60,21 +60,21 @@ body{
     overflow: hidden;
     width: 39%;
     background: var(--color-secondary);
-    height: 87vh;
+    height: 84vh;
 }
 
 .comanda-screen__comanda-id-wrapper,
 .finish-screen__finish-id-wrapper{
     overflow-y: auto;
     width: 100%;
-    height: 87%;
+    height: 70vh;
 }
 
 .order__finish-screen{
     overflow: hidden;
     width: 60%;
     background: var(--color-secondary);
-    height: 87vh;
+    height: 84vh;
 }
 
 
@@ -98,10 +98,9 @@ body{
 .finish-screen__finish-id{
     position: relative;
     width: 98%;
-    height: 21%;
     text-align: center;
     padding-top: 2rem;
-    padding-bottom: 1%;
+    padding-bottom: 2rem;
     background-color: var(--background-color);
     margin-bottom: 1rem;
     margin-left: 1%;
@@ -115,7 +114,6 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
     padding-top: 0;
-    height: 18%;
 }
 
 
@@ -152,6 +150,9 @@ body{
 
 .comanda-id__client-id,
 .comanda-id__client-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 2.8rem;
 }
 

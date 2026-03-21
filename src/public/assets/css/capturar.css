@@ -2,7 +2,7 @@
     --color-secondary: #295E62;
     --color-primary: #f6f6f6;
     --pop-up-window-background: #242222;
-    --row-color: #CFD0D2;
+    --row-color: #2F323D;
     --confirmation-color: #008D44;
     --color-field: #D0D0D7;
 }
@@ -26,11 +26,31 @@ body{
 }
 
 .capturar__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: 10rem;
     font-size: 3rem;
     padding-left: 2rem;
     color: var(--color-primary);
     background: var(--color-secondary);
+}
+
+.header__nav{
+    width: 30%;
+    font-size: 2rem;
+}
+
+.header-nav__ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    align-items: center;
+}
+
+.header__link:hover{
+    text-decoration: underline;
 }
 
 .pedido-btn{
@@ -39,10 +59,8 @@ body{
     border-radius: 3rem;
     color: var(--color-primary);
     width: 20%;
-    height: 80%;
-    padding: 0.9rem;
+    height: 7rem;
     text-align: center;
-    padding: 0.8rem;
     font-size: 2rem;
     transition: all 300ms ease-out;
 }
@@ -50,8 +68,7 @@ body{
 .limpiar-btn{
     cursor: pointer;
     width: 20%;
-    height: 80%;
-    padding: 0.8rem;
+    height: 7rem;
     font-size: 2rem;
     text-align: center;
     background: var(--color-secondary);
@@ -72,7 +89,6 @@ body{
 .button-wrapper{
     display: flex;
     width: 92%;
-    height: 10%;
     margin: 0 auto;
     margin-top: 3%;
     flex-direction: row;
@@ -82,8 +98,9 @@ body{
 .order-view__zone{
     margin: 0 auto;
     width: 80%;
-    height: 64vh;
+    height: 62vh;
     margin-top: 3%;
+    overflow: scroll;
 }
 
 .order-view__fields-wrapper,
@@ -92,49 +109,50 @@ body{
     flex-direction: row;
 }
 
-.order-view__field,
-.order-view__rows{
-    width: 25%;
+.orders-table{
+    width: 100%;
+    border-collapse: collapse;
     font-size: 2rem;
-    text-align: center;
 }
+
 
 .order-view__field{
+    text-align: center;
+    vertical-align: middle;
     color: var(--color-primary);
-    background: linear-gradient(0.25turn, var(--color-secondary) 75%,  var(--color-primary));
+    background: linear-gradient(0.25turn, var(--color-secondary) 75%,  var(--row-color));
 }
 
-.order-view__rows{
-    position: relative;
-}
-
-.order-view__rows-zone{
-    height: 93%;
+.rowsZone__trow{
+    color: var(--color-primary);
+    border: 0;
     background: var(--row-color);
-    overflow-y: scroll;
+}
+
+.trow-column{
+    text-align: -webkit-center;
+    vertical-align: middle;
+}
+
+.rowsZone__trow:nth-of-type(even){
+    background: var(--color-secondary);
 }
 
 .row__select{
+    color: var(--color-secondary);
     cursor: pointer;
-    position: absolute;
-    width: 66%;
-    left: 21%;
-    top: 7%;
+    width: 100%;
     background: var(--color-primary);
-    border: 0.1rem solid var(--color-secondary);
 }
 
-.select__screen-status{
-    z-index: 1;
-    position: absolute;
-    width: 50%;
-    height: 91%;
-    left: 21%;
-    top: 7%;
+
+.delete-order-btn{
+    cursor: pointer;
+    width: 5rem;
+    height: 2.6rem;
     background: var(--color-primary);
-    border: 0.1rem solid var(--color-secondary);
-    border-radius: 0.3rem;
-    font-size: 2rem;
+    color: var(--color-secondary);
+    border-radius: 10px;
 }
 
 .backgroud-window__zone::before{
@@ -146,57 +164,104 @@ body{
     height: 100%;
     opacity: 0.5;
     top: 0;
+    left: 0;
     transition: all 300ms ease-out;
 }
 
-.selected-option__window,
-.selected-option__confirmation,
-.new-order__window{
-    position: absolute;
+
+.pop-up-window{
+    
+    
+    
+    position: fixed;
     z-index: 999;
     width: 34%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /*height: 44%;*/
     background: var(--color-primary);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 300ms ease-out;
+}
+
+.activate-pop-up{
+    animation: pop-in 0.3s ease-out;
+}
+
+.activate-pop-out{
+    animation: pop-out 0.3s ease-out;
+}
+
+@keyframes pop-in{
+    from{
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes pop-out{
+    from{
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to{
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+}
+
+.activate-pop-up{
+    opacity: 1;
+    visibility: visible;
+    animation: pop-in 0.3s ease-out;
+}
+
+.disable-pop-up{
+    /*
+    opacity: 0;
+    visibility: hidden;
+    */
+    animation: pop-out 0.3s ease-out;
+}
+
+.pop-up-window__icon-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    margin-top: 2rem;
 }
 
 .window__caoution{
     position: relative;
-    width: 24%;
-    height: 38%;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
-    margin-left: 37%;
-    margin-top: 3%;
     border: 0.5rem solid var(--color-secondary);
     border-radius: 50%;
 }
 
 .caution__img{
-    position: absolute;
-    bottom: 18%;
-    left: 14%;
     width: 73%;
     height: 73%;
-}
-
-.caution__message{
-    margin-top: 4%;
-    margin-left: 10%;
-    margin-right: 10%;
-    text-align: center;
 }
 
 .caution__yes-btn,
 .caution__no-btn,
 .confirm__btn{
     cursor: pointer;
-    position: absolute;
-    top: 82%;
-    width: 21%;
-    height: 12%;
+    width: 20%;
+    height: 100%;
     background: var(--color-secondary);
     color: var(--color-primary);
     font-size: 2.5rem;
@@ -205,18 +270,6 @@ body{
     transition: all 300ms ease-out;
 }
 
-.caution__yes-btn{
-    left: 8%;
-}
-
-.caution__no-btn{
-    z-index: 1;
-    left: 70%;
-}
-
-.confirm__btn{
-    left: 40%;
-}
 
 .caution__yes-btn:hover,
 .caution__yes-btn:focus,
@@ -229,16 +282,27 @@ body{
     border: 0.1rem solid var(--color-secondary);
 }
 
-.selected-option__icon-wrap{
-    width: 29%;
-    margin-left: 36%;
+.pop-up-window__icon{
+    width: 50%;
+    height: 100%;
 }
 
-.confirm__message{
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 2%;
+.pop-up-window__message{
+    width: 95%;
     text-align: center;
+    margin-bottom: 1rem;
+}
+
+.btns-wrapper{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.btn-center{
+    justify-content: center;
 }
 
 .window-form{
