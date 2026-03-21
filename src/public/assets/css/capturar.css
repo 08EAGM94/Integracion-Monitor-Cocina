@@ -170,16 +170,12 @@ body{
 
 
 .pop-up-window{
-    
-    
-    
     position: fixed;
     z-index: 999;
     width: 34%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*height: 44%;*/
     background: var(--color-primary);
     top: 50%;
     left: 50%;
@@ -214,20 +210,6 @@ body{
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.5);
     }
-}
-
-.activate-pop-up{
-    opacity: 1;
-    visibility: visible;
-    animation: pop-in 0.3s ease-out;
-}
-
-.disable-pop-up{
-    /*
-    opacity: 0;
-    visibility: hidden;
-    */
-    animation: pop-out 0.3s ease-out;
 }
 
 .pop-up-window__icon-wrap{

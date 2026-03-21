@@ -75,6 +75,8 @@ window.addEventListener("load", () =>{
         deleteBtn.addEventListener("click", () =>{
 
             backgroundWindow.classList.remove("hidthis");
+            if(popUpWindow.classList.contains("activate-pop-out")) popUpWindow.classList.remove("activate-pop-out");
+            popUpWindow.classList.add("activate-pop-up");
 
             const iconWrap = document.createElement("div")
             iconWrap.classList.add("pop-up-window__icon-wrap");
@@ -114,19 +116,27 @@ window.addEventListener("load", () =>{
                 
                 const okBtn = popUpBtnsWrapper.querySelector(".confirm__btn");
                 okBtn.addEventListener("click", () =>{
-                    iconWrap.remove();
-                    popUpMessage.remove();
-                    popUpBtnsWrapper.remove();
-                    backgroundWindow.classList.add("hidthis");
+                    popUpWindow.classList.remove("activate-pop-up");
+                    popUpWindow.classList.add("activate-pop-out");
+                    setTimeout(() =>{
+                        iconWrap.remove();
+                        popUpMessage.remove();
+                        popUpBtnsWrapper.remove();
+                        backgroundWindow.classList.add("hidthis");
+                    }, 200);
                 });
             });
 
             const noBtn = popUpBtnsWrapper.querySelector(".caution__no-btn")
             noBtn.addEventListener("click", () =>{
-                iconWrap.remove();
-                popUpMessage.remove();
-                popUpBtnsWrapper.remove();
-                backgroundWindow.classList.add("hidthis");
+                popUpWindow.classList.remove("activate-pop-up");
+                popUpWindow.classList.add("activate-pop-out");
+                setTimeout(() =>{
+                    iconWrap.remove();
+                    popUpMessage.remove();
+                    popUpBtnsWrapper.remove();
+                    backgroundWindow.classList.add("hidthis");
+                }, 200);
             });
         });
 
