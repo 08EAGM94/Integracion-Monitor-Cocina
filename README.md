@@ -5,7 +5,7 @@
 <br/>
 <br/>
 <p>
-  La demo de la pantalla de Tickets para un cliente de Interpc fue un aporte a la empresa dentro de mis prácticas profesionales, se ideó una pantalla principal donde el personal puede crear pedidos anotando el número de comanda y el nombre del cliente en cuestión, en esa misma pantalla se puede cambiar los estatus de los pedidos y el cambio se puede ver en tiempo real, tanto en la interfaz de creación de pedidos como en la pantalla de tickets gracias al modulo Socket.io de Node.js. 
+  La demo de la pantalla de Tickets para un cliente de Interpc fue un aporte a la empresa dentro de mis prácticas profesionales, se ideó una pantalla principal donde el personal puede crear pedidos anotando el número de comanda y el nombre del cliente en cuestión, en esa misma pantalla se puede cambiar los estatus de los pedidos y el cambio se puede ver en tiempo real, tanto en la interfaz de creación de pedidos como en la pantalla de tickets gracias al módulo Socket.io de Node.js. 
 </p>
 <img width="1600" height="776" alt="2026-03-24 11_57_48-Window" src="https://github.com/user-attachments/assets/3932a659-7b15-4d3a-b67d-54744101e388" />
 <br/>
