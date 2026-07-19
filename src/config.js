@@ -6,6 +6,7 @@ config();
 export const PORT = process.env.PORT || 3001;
 
 export const SQLSERVER_DB = process.env.SQLSERVER_DB;
+export const SQLSERVER_DB_TEST = process.env.SQLSERVER_DB_TEST;
 export const SQLSERVER_USER = process.env.SQLSERVER_USER;
 export const SQLSERVER_PWD = process.env.SQLSERVER_PWD;
 export const SQLSERVER_HOST = process.env.SQLSERVER_HOST;

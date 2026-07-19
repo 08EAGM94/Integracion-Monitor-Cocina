@@ -52,4 +52,3 @@ window.addEventListener("resize", () =>{
         softIcon.innerHTML = '<img class="softappetit__img" src="assets/img/unnamed.png"/>';
     }
 });
-

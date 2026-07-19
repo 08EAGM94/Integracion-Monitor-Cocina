@@ -5,8 +5,8 @@ import Comanda from "./model/Comanda.model";
 import { col, fn, Op } from "sequelize";
 import { htmlSpecialChars } from "./escape";
 //socket lado del servidor
-//io es nuestro servidor de socket del archivo index.js, practicamente está a la escucha de cualquier petición HTTP ingresada a nuestro servidor (ejemplo: localhost:3000), socket 
-//es en si los eventos socket que las ventanas del lado del cliente emitieron al socket servidor.
+//io es nuestro servidor de socket del archivo index.js, practicamente está a la escucha de cualquier petición HTTP del cliente.
+//el parametro socket del arrow function del evento on 'connection' son los posibles eventos que puede lanzar el cliente por medio de emit.
 export default (io) =>{
     io.on('connection', (socket) =>{
         CocinaBar.sync();
@@ -163,10 +163,10 @@ export default (io) =>{
             const name = await Clientes.findAll({attributes: ["Nombre"], where:{ID: myJson.idComanda}});
             name.push({Idscreen: myJson.idScreen});
 
-            const folio = await Comanda.findAll({attributes: ["Folio"], where:{ID: myJson.idComanda}});
+            const folio = await Comanda.findAll({attributes: ["Folio"], where:{Id: myJson.idComanda}});
             folio.push({Idscreen: myJson.idScreen});
             
-            io.emit("serverSendCliInfo", name, folio);
+            await io.emit("serverSendCliInfo", name, folio);
         });
     }); 
 }
